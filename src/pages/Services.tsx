@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { PenTool, Layers, Shirt, Package, ArrowRight } from 'lucide-react';
-import { useLanguage } from '@/hooks/useLanguage';
+import { PenTool, Layers, Shirt, Package } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
 
 const serviceList = [
@@ -36,8 +35,6 @@ const serviceList = [
 ];
 
 export default function Services() {
-  const { t } = useLanguage();
-
   return (
     <div className="relative pt-32 pb-24">
       <Helmet>

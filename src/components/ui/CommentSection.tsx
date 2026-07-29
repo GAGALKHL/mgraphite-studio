@@ -27,7 +27,7 @@ const mockComments: Comment[] = [
   },
 ];
 
-export default function CommentSection({ projectId }: { projectId: string }) {
+export default function CommentSection({ projectId: _projectId }: { projectId: string }) {
   const [comments, setComments] = useState<Comment[]>(mockComments);
   const [text, setText] = useState('');
 
