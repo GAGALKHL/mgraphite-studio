@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-sakura-glow: rgba(244, 170, 186, 0.15);
+    --color-graphite-deep: #050505;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0a0a0a;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f4aaba;
+  }
+
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .text-gradient-sakura {
+    background: linear-gradient(135deg, #f4c2c2 0%, #e8a0bf 50%, #f4aaba 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-strong {
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glow-sakura {
+    box-shadow: 0 0 40px rgba(244, 170, 186, 0.15), 0 0 80px rgba(244, 170, 186, 0.05);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply relative overflow-hidden rounded-full bg-sakura-400 px-8 py-3.5 text-sm font-medium text-graphite-950 transition-all duration-300 hover:bg-sakura-300 hover:shadow-[0_0_30px_rgba(244,170,186,0.4)] focus:outline-none focus:ring-2 focus:ring-sakura-400 focus:ring-offset-2 focus:ring-offset-graphite-950;
+  }
+
+  .btn-outline {
+    @apply relative rounded-full border border-white/20 bg-transparent px-8 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:border-sakura-400/50 hover:bg-white/5 hover:text-sakura-200 focus:outline-none focus:ring-2 focus:ring-sakura-400 focus:ring-offset-2 focus:ring-offset-graphite-950;
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 transition-all duration-300 focus:border-sakura-400/50 focus:bg-white/[0.07] focus:outline-none focus:ring-1 focus:ring-sakura-400/30;
+  }
+}
