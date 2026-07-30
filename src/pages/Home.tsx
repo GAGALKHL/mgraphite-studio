@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight, ChevronRight, Users } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -11,12 +11,6 @@ import SakuraParticles from '@/components/effects/SakuraParticles';
 export default function Home() {
   const { t } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,7 +48,6 @@ export default function Home() {
       {/* Hero */}
       <motion.section
         ref={heroRef}
-        style={{ opacity: heroOpacity, scale: heroScale }}
         className="relative flex min-h-screen items-center overflow-hidden pt-20"
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(244,170,186,0.08)_0%,_transparent_60%)]" />
