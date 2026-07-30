@@ -24,7 +24,6 @@ export default defineConfig({
           vendor: ['react', 'react-dom', 'react-router-dom'],
           animation: ['framer-motion'],
           firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
-          query: ['@tanstack/react-query'],
           form: ['react-hook-form', '@hookform/resolvers', 'zod'],
         },
       },
