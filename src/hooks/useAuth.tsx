@@ -26,32 +26,55 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (u) => {
-      setUser(u);
-      if (u) {
-        const ref = doc(db, 'users', u.uid);
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          setUserData(snap.data() as UserData);
-        } else {
-          const newData: UserData = {
-            uid: u.uid,
-            email: u.email,
-            displayName: u.displayName,
-            photoURL: u.photoURL,
-            role: 'user',
-            favorites: [],
-            createdAt: new Date().toISOString(),
-          };
-          await setDoc(ref, { ...newData, createdAt: serverTimestamp() });
-          setUserData(newData);
-        }
-      } else {
-        setUserData(null);
-      }
+    // Safety timeout: if Firebase doesn't respond within 5 seconds,
+    // force loading to false so the app is never permanently blocked.
+    const safetyTimer = setTimeout(() => {
       setLoading(false);
-    });
-    return unsub;
+    }, 5000);
+
+    let unsub: (() => void) | undefined;
+
+    try {
+      unsub = onAuthStateChanged(auth, async (u) => {
+        clearTimeout(safetyTimer);
+        setUser(u);
+        if (u) {
+          try {
+            const ref = doc(db, 'users', u.uid);
+            const snap = await getDoc(ref);
+            if (snap.exists()) {
+              setUserData(snap.data() as UserData);
+            } else {
+              const newData: UserData = {
+                uid: u.uid,
+                email: u.email,
+                displayName: u.displayName,
+                photoURL: u.photoURL,
+                role: 'user',
+                favorites: [],
+                createdAt: new Date().toISOString(),
+              };
+              await setDoc(ref, { ...newData, createdAt: serverTimestamp() });
+              setUserData(newData);
+            }
+          } catch {
+            // Firestore error — still allow the app to render
+          }
+        } else {
+          setUserData(null);
+        }
+        setLoading(false);
+      });
+    } catch {
+      // Firebase initialization error — clear the timer and unblock the app
+      clearTimeout(safetyTimer);
+      setLoading(false);
+    }
+
+    return () => {
+      clearTimeout(safetyTimer);
+      unsub?.();
+    };
   }, []);
 
   const signInWithGoogle = useCallback(async () => {

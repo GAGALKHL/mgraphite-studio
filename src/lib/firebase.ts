@@ -12,6 +12,10 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+// initializeApp will not throw for missing values — Firebase SDKs
+// handle undefined config gracefully at the module level.
+// The app will still render; auth/firestore calls will fail silently
+// (caught in useAuth) rather than crashing the whole page.
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
