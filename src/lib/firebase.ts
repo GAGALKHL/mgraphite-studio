@@ -16,6 +16,7 @@ const firebaseConfig = {
 // handle undefined config gracefully at the module level.
 // The app will still render; auth/firestore calls will fail silently
 // (caught in useAuth) rather than crashing the whole page.
+console.log("Firebase Config:", firebaseConfig);
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
